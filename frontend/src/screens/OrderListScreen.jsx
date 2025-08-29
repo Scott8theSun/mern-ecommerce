@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 const OrderListScreen = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -19,7 +19,7 @@ const OrderListScreen = () => {
 
     const fetchOrders = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/orders/myorders');
+        const { data } = await axios.get(`${API_BASE_URL}/api/orders/myorders`);
         setOrders(data);
       } catch (error) {
         console.error('Error fetching orders:', error);
