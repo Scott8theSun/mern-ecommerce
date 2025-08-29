@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 
 // Load Stripe (you'll need to add your publishable key)
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_your_key_here');
-
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 const PaymentForm = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -44,7 +44,7 @@ const PaymentForm = () => {
         totalPriceCents: Math.round(getCartTotal() * 1.1),
       };
 
-      const orderResponse = await fetch('http://localhost:5000/api/orders', {
+      const orderResponse = await fetch(`${API_BASE_URL}/api/orders`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ const PaymentForm = () => {
       }
 
       // Create payment intent
-      const paymentResponse = await fetch(`http://localhost:5000/api/orders/${order._id}/pay`, {
+      const paymentResponse = await fetch(`${API_BASE_URL}/api/orders/${order._id}/pay`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ const PaymentForm = () => {
         toast.error(error.message);
       } else if (paymentIntent.status === 'succeeded') {
         // Update order to paid
-        await fetch(`http://localhost:5000/api/orders/${order._id}/pay`, {
+        await fetch(`${API_BASE_URL}/api/orders/${order._id}/pay`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
