@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 const OrderScreen = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const OrderScreen = () => {
 
     const fetchOrder = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5000/api/orders/${id}`);
+        const { data } = await axios.get(`${API_BASE_URL}/api/orders/${id}`);
         setOrder(data);
       } catch (error) {
         console.error('Error fetching order:', error);
