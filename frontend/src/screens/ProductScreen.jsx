@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
-
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 const ProductScreen = () => {
   const { id } = useParams();
   const navigate = useNavigate();
