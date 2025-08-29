@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
+// API base URL
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const HomeScreen = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -10,7 +13,7 @@ const HomeScreen = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/products');
+        const { data } = await axios.get(`${API_BASE_URL}/api/products`);
         setProducts(data);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -25,10 +28,10 @@ const HomeScreen = () => {
 
   const seedProducts = async () => {
     try {
-      await axios.post('http://localhost:5000/api/products/seed');
+      await axios.post(`${API_BASE_URL}/api/products/seed`);
       toast.success('Sample products added!');
       // Refresh products
-      const { data } = await axios.get('http://localhost:5000/api/products');
+      const { data } = await axios.get(`${API_BASE_URL}/api/products`);
       setProducts(data);
     } catch (error) {
       console.error('Error seeding products:', error);
